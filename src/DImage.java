@@ -498,7 +498,7 @@ public class DImage {
     }
 
     // Data transfer object
-    private static class ColorComponents2d {
+    public static class ColorComponents2d {
         public int width, height;
         public short[][] red, green, blue, alpha;
 
