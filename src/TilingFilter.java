@@ -7,10 +7,10 @@ public class TilingFilter implements PixelFilter {
 
     public TilingFilter() {
         do {
-            repeat_rows = Integer.parseInt(JOptionPane.showInputDialog("Enter # of col repeats [1-10]"));
+            repeat_rows = Integer.parseInt(JOptionPane.showInputDialog("Enter # of row repeats [1-10]"));
         } while (repeat_rows < 1 || repeat_rows > 10);
         do {
-            repeat_cols = Integer.parseInt(JOptionPane.showInputDialog("Enter # of row repeats [1-10]"));
+            repeat_cols = Integer.parseInt(JOptionPane.showInputDialog("Enter # of col repeats [1-10]"));
         } while (repeat_cols < 1 || repeat_cols > 10);
     }
 
@@ -23,7 +23,7 @@ public class TilingFilter implements PixelFilter {
 
                 for (int r = 0; r < img.getHeight(); r++) {
                     for (int c = 0; c < img.getWidth(); c++) {
-                        out_grid[row+r][col+c] = grid[r][c];
+                        out_grid[row*img.getHeight()+r][col*img.getWidth()+c] = grid[r][c];
                     }
                 }
             }
