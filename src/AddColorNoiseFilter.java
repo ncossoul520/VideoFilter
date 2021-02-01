@@ -17,6 +17,8 @@ public class AddColorNoiseFilter implements PixelFilter {
         short[][] green = img.getGreenChannel();
         short[][] blue = img.getBlueChannel();
 
+        int a = red.length;
+
         for (int r = 0; r < img.getHeight(); r++) {
             for (int c = 0; c < img.getWidth(); c++) {
                 red[r][c]   += Math.random()*noise_max;
