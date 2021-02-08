@@ -27,7 +27,7 @@ public class ConvolutionFilter implements PixelFilter {
     public DImage processImage(DImage img) {
         short[][] pixels = img.getBWPixelGrid();
         short[][] outputPixels = img.getBWPixelGrid();  // <-- overwrite these values
-        double[][] kernel = blurKernel3x3;
+        double[][] kernel = genBlurBox(7);
 
         int border = kernel.length/2;
         for (int r = border; r < img.getHeight() - border; r++) {
@@ -53,6 +53,22 @@ public class ConvolutionFilter implements PixelFilter {
         }
         return (short)(sum/sum_kernel);
     }
+
+    private double[][] genBlurBox(int n) {
+        // Set size to 3x3 if n is < than 3 or even
+        if (n < 3 || n%2 == 0 ){
+            n = 3;
+        }
+        double[][] out = new double[n][n];
+        double val = 1.0/(n*n);
+        for (int r = 0; r < n; r++) {
+            for (int c = 0; c < n; c++) {
+                out[r][c] = val;
+            }
+        }
+        return out;
+    }
+
 
     @Override
     public void drawOverlay(PApplet window, DImage original, DImage filtered) {

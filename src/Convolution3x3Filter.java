@@ -1,5 +1,4 @@
 import processing.core.PApplet;
-
 import javax.swing.*;
 
 public class Convolution3x3Filter implements PixelFilter {
@@ -20,26 +19,41 @@ public class Convolution3x3Filter implements PixelFilter {
                     {-1, 1, 1},
                     {0, 1, 2}   };
 
+    private double[][] Gaussian5x5 =
+            {
+                    {-2, -1, 0},
+                    {-1, 1, 1},
+                    {0, 1, 2}   };
+
+
+
     @Override
     public DImage processImage(DImage img) {
         short[][] pixels = img.getBWPixelGrid();
         short[][] outputPixels = img.getBWPixelGrid();  // <-- overwrite these values
+        double[][] kernel = blurKernel;
 
-        for (int r = 1; r < img.getHeight()-1; r++) {
-            for (int c = 1; c < img.getWidth()-1; c++) {
-                short sum = 0;
-                for (int dr = -1; dr <= 1 ; dr++) {
-                    for (int dc = -1; dc <= 1; dc++) {
-                        sum += pixels[r+dr][c+dc] * embossKernel[dr+1][dc+1];
-                    }
-                }
-                outputPixels[r][c] = sum;
+        int border = kernel.length/2;
+        for (int r = border; r < img.getHeight() - border; r++) {
+            for (int c = border; c < img.getWidth() - border; c++) {
+                outputPixels[r][c] = findWeightedAverageAt(r, c, pixels, kernel);
             }
         }
 
-        img.setPixels(outputPixels );
-
+        img.setPixels(outputPixels);
         return img;
+    }
+
+    private short findWeightedAverageAt(int r, int c, short[][] pixels, double[][] kernel) {
+        int width = kernel.length/2;
+
+        short sum = 0;
+        for (int dr = -width; dr <= width ; dr++) {
+            for (int dc = -width; dc <= width; dc++) {
+                sum += pixels[r+dr][c+dc] * kernel[width+dr][width+dc];
+            }
+        }
+        return sum;
     }
 
     @Override

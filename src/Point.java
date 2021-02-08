@@ -1,6 +1,6 @@
 public class Point {
     private short red, green, blue;
-    private short row, col;
+    private short r, c;
 
     // Assign random values
     public Point() {
@@ -15,9 +15,9 @@ public class Point {
         this.blue  = blue;
     }
 
-    public Point(short row, short col, short red, short green, short blue) {
-        this.row = row;
-        this.col = col;
+    public Point(short r, short c, short red, short green, short blue) {
+        this.r = r;
+        this.c = c;
         this.red   = red;
         this.green = green;
         this.blue  = blue;
@@ -60,19 +60,11 @@ public class Point {
     }
 
     public short getRow() {
-        return row;
-    }
-
-    public void setRow(short row) {
-        this.row = row;
+        return r;
     }
 
     public short getCol() {
-        return col;
-    }
-
-    public void setCol(short col) {
-        this.col = col;
+        return c;
     }
 
     @Override
